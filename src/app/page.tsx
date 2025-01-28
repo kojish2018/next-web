@@ -47,6 +47,17 @@ export default function Home() {
           >
             Read our docs
           </a>
+
+          <div className="bg-gray-100 min-h-screen flex items-center justify-center">
+            <div className="bg-white p-8 rounded-lg shadow-lg text-center">
+              <h1 className="text-2xl font-bold text-red-600">
+                TailwindCSS is Working!
+              </h1>
+              <p className="text-gray-600 mt-4">
+                If you see this styled text, TailwindCSS is properly set up.
+              </p>
+            </div>
+          </div>
         </div>
       </main>
       <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
