@@ -4,8 +4,8 @@ import matter from "gray-matter";
 import { BlogPost } from "../types/blogPost";
 
 const postsDirectory = path.join(process.cwd(), "src/posts");
-const defaultImage = "/default.jpg"; // public フォルダ内のデフォルト画像
 
+// 投稿データを取得する関数（サーバー専用）
 export function getAllPosts(): BlogPost[] {
   const fileNames = fs.readdirSync(postsDirectory);
 
@@ -17,8 +17,8 @@ export function getAllPosts(): BlogPost[] {
     return {
       title: data.title,
       date: data.date,
-      topics: data.topics,
-      image: data.image && data.image.trim() !== "" ? data.image : defaultImage,
+      topics: data.topics || [],
+      image: data.image || "/default.jpg", // 画像がない場合はデフォルト画像を設定
       slug: fileName.replace(/\.md$/, ""),
       content,
     };
