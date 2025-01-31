@@ -44,9 +44,7 @@ export default function AboutPage() {
           </div>
         </div>
       </div>
-      <footer className="mt-12 text-center text-gray-500">
-        © 2025 ・ Kohhblog
-      </footer>
+      <footer className="mt-12 text-center text-gray-500">2025Kohhblog</footer>
     </div>
   );
 }
