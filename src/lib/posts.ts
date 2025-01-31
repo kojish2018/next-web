@@ -1,28 +1,33 @@
-// "use server";
+"use server"; // サーバーコンポーネントとして明示
 
-import fs from "fs";
+import fs from "fs/promises"; // `fs/promises` を使うことで非同期処理にする
 import path from "path";
 import matter from "gray-matter";
 import { BlogPost } from "../types/blogPost";
 
 const postsDirectory = path.join(process.cwd(), "src/posts");
 
-// 投稿データを取得する関数（サーバー専用）
-export function getAllPosts(): BlogPost[] {
-  const fileNames = fs.readdirSync(postsDirectory);
+export async function getAllPosts(): Promise<BlogPost[]> {
+  // ← `async` を追加
+  const fileNames = await fs.readdir(postsDirectory); // `readdirSync` → `readdir`
 
-  return fileNames.map((fileName) => {
-    const fullPath = path.join(postsDirectory, fileName);
-    const fileContents = fs.readFileSync(fullPath, "utf8");
-    const { data, content } = matter(fileContents);
+  const posts = await Promise.all(
+    fileNames.map(async (fileName) => {
+      // `map` 内部も非同期処理
+      const fullPath = path.join(postsDirectory, fileName);
+      const fileContents = await fs.readFile(fullPath, "utf8"); // `readFileSync` → `readFile`
+      const { data, content } = matter(fileContents);
 
-    return {
-      title: data.title,
-      date: data.date,
-      topics: data.topics || [],
-      image: data.image || "/default.jpg", // 画像がない場合はデフォルト画像を設定
-      slug: fileName.replace(/\.md$/, ""),
-      content,
-    };
-  });
+      return {
+        title: data.title,
+        date: data.date,
+        topics: data.topics || [],
+        image: data.image || "/default.jpg",
+        slug: fileName.replace(/\.md$/, ""),
+        content,
+      };
+    })
+  );
+
+  return posts;
 }

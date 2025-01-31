@@ -4,7 +4,7 @@ import { getAllPosts } from "../lib/posts";
 import { BlogPost } from "../types/blogPost";
 
 const Page = async () => {
-  const posts: BlogPost[] = getAllPosts();
+  const posts: BlogPost[] = await getAllPosts();
 
   // 投稿からタグ一覧を取得（重複削除）
   const allTopics = Array.from(new Set(posts.flatMap((post) => post.topics)));

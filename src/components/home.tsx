@@ -16,12 +16,12 @@ const Home: React.FC<HomeProps> = ({ posts, topics }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      document.body.classList.add("antialiased");
-      return () => document.body.classList.remove("antialiased");
-    }
-  }, []);
+  //   useEffect(() => {
+  //     if (typeof window !== "undefined") {
+  //       document.body.classList.add("antialiased");
+  //       return () => document.body.classList.remove("antialiased");
+  //     }
+  //   }, []);
 
   // 🔍 フィルタリング処理
   const filteredPosts = posts.filter(
