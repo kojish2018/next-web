@@ -2,6 +2,8 @@
 
 import * as React from "react";
 import Header from "../../components/header";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function AboutPage() {
   return (
@@ -15,9 +17,16 @@ export default function AboutPage() {
         <div className="flex flex-col md:flex-row items-center md:items-start">
           {/* アイコン部分 */}
           <div className="flex-shrink-0 mb-6 md:mb-0 md:mr-6">
-            <img
+            {/* <img
               src="/images/profile.png" // プロフィール画像のパスを変更してください
               alt="Profile Icon"
+              className="w-24 h-24 md:w-32 md:h-32 object-cover rounded-full"
+            /> */}
+            <Image
+              src="/images/profile.png" // プロフィール画像のパスを変更してください
+              alt="Profile Icon"
+              width={1280} // 適切なサイズを指定
+              height={1280}
               className="w-24 h-24 md:w-32 md:h-32 object-cover rounded-full"
             />
           </div>
@@ -34,12 +43,12 @@ export default function AboutPage() {
               <li>テスト</li>
             </ul>
             <p className="mt-4">
-              <a
+              <Link
                 href="/" // 実際のリンクに変更してください
                 className="text-blue-500 hover:underline"
               >
                 テストアカウント
-              </a>
+              </Link>
             </p>
           </div>
         </div>

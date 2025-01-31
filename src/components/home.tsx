@@ -1,10 +1,11 @@
 "use client";
 
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { BlogPost } from "../types/blogPost";
 import Link from "next/link";
 import Header from "./header";
+import Image from "next/image";
 
 // 🔹 `props` の型定義を追加
 interface HomeProps {
@@ -84,9 +85,17 @@ const Home: React.FC<HomeProps> = ({ posts, topics }) => {
               passHref
               className="block bg-white rounded-lg shadow-lg overflow-hidden"
             >
-              <img
+              {/* <img
                 src={post.image}
                 alt={post.title}
+                className="w-full h-48 object-cover"
+              /> */}
+              <Image
+                src={post.image}
+                alt={post.title}
+                width={1280} // 適切なサイズを指定
+                height={1280}
+                //   fill
                 className="w-full h-48 object-cover"
               />
               <div className="p-4">
