@@ -2,34 +2,33 @@
 
 import React, { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
-import { BlogPost } from "../../types/blogPost";
-import Header from "../../components/header";
+import { BlogPost } from "../../../types/blogPost";
+import Header from "../../../components/header";
 
 const PostPage = () => {
   const params = useParams();
-  console.log("✅ Received params:", params);
 
-  const slugDate = params["slug-date"];
-  if (!slugDate) {
-    console.error("❌ Missing slug or date", params);
-    return <p className="text-red-600">Error: Missing slug or date</p>;
-  }
-
-  console.log("slugDate:", slugDate);
-
-  const [slug, date] = slugDate.split("-");
+  // ✅ useState をトップレベルで定義
+  const [slug, setSlug] = useState<string | null>(null);
+  const [date, setDate] = useState<string | null>(null);
   const [post, setPost] = useState<BlogPost | null>(null);
   const [loading, setLoading] = useState(true);
 
+  // ✅ useEffect で params から slug と date を取得
   useEffect(() => {
+    if (params.slug && params.date) {
+      setSlug(params.slug as string);
+      setDate(params.date as string);
+    }
+  }, [params]);
+
+  // ✅ useEffect で API からデータ取得
+  useEffect(() => {
+    if (!slug || !date) return;
+
+    console.log("🔍 Fetching post for:", slug, date);
+
     const fetchPost = async () => {
-      if (!slug || !date) {
-        console.error("❌ Invalid slug or date:", slug, date);
-        return;
-      }
-
-      console.log("🔍 Fetching post for:", slug, date);
-
       try {
         const response = await fetch(`/api/posts?slug=${slug}&date=${date}`);
         if (!response.ok) throw new Error("Failed to fetch post");
@@ -45,6 +44,12 @@ const PostPage = () => {
 
     fetchPost();
   }, [slug, date]);
+
+  // ✅ エラーハンドリングを return 前に記述
+  if (!slug || !date) {
+    console.error("❌ Missing slug or date", params);
+    return <p className="text-red-600">Error: Missing slug or date</p>;
+  }
 
   if (loading) return <p className="text-gray-600 text-xl">Loading...</p>;
 

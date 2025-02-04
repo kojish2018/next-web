@@ -81,7 +81,7 @@ const Home: React.FC<HomeProps> = ({ posts, topics }) => {
           filteredPosts.map((post) => (
             <Link
               key={post.title}
-              href={`/${post.slug}-${post.date}`}
+              href={`/${post.slug}/${post.date}`}
               passHref
               className="block bg-white rounded-lg shadow-lg overflow-hidden"
             >
