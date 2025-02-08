@@ -19,3 +19,28 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* ポートフォリオ画面デザイン */
+
+.cursor {
+  border-radius: 4px; /* ✅ 角丸をなくして四角形に */
+  pointer-events: none;
+  mix-blend-mode: difference;
+}
+
+.bg-works {
+  background-image: url("/worksbackground.webp"); /* ✅ 背景画像 */
+  background-size: cover; /* ✅ 画像を画面いっぱいに */
+  background-position: center; /* ✅ 中央に配置 */
+  background-repeat: no-repeat; /* ✅ 繰り返しなし */
+  background-attachment: fixed; /* ✅ 背景を固定 */
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.9
+  ); /* ✅ 白のオーバーレイ (透明度50%) */
+  background-blend-mode: overlay; /* ✅ 画像と白色をブレンド */
+}

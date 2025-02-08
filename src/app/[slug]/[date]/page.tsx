@@ -8,7 +8,6 @@ import Header from "../../../components/header";
 const PostPage = () => {
   const params = useParams();
 
-  // ✅ useState をトップレベルで定義
   const [slug, setSlug] = useState<string | null>(null);
   const [date, setDate] = useState<string | null>(null);
   const [post, setPost] = useState<BlogPost | null>(null);
@@ -25,8 +24,6 @@ const PostPage = () => {
   // ✅ useEffect で API からデータ取得
   useEffect(() => {
     if (!slug || !date) return;
-
-    console.log("🔍 Fetching post for:", slug, date);
 
     const fetchPost = async () => {
       try {
@@ -45,7 +42,6 @@ const PostPage = () => {
     fetchPost();
   }, [slug, date]);
 
-  // ✅ エラーハンドリングを return 前に記述
   if (!slug || !date) {
     console.error("❌ Missing slug or date", params);
     return <p className="text-red-600">Error: Missing slug or date</p>;
@@ -61,6 +57,9 @@ const PostPage = () => {
     );
   }
 
+  // ✅ S3 URL の検出用正規表現
+  const s3UrlPattern = /https:\/\/[a-zA-Z0-9.-]+\.s3\.[a-zA-Z0-9.-]+\/[^\s]+/;
+
   return (
     <div className="bg-gray-100 min-h-screen p-6">
       <Header />
@@ -68,9 +67,24 @@ const PostPage = () => {
         <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
         <p className="text-gray-600 mb-6">{post.date}</p>
         <div className="text-gray-800 space-y-4">
-          {post.content.split("\n").map((line, index) => (
-            <p key={index}>{line}</p>
-          ))}
+          {post.content.split("\n").map((line, index) => {
+            // S3 URL が含まれるかチェック
+            const match = line.match(s3UrlPattern);
+
+            if (match) {
+              return (
+                <img
+                  key={index}
+                  src={match[0]} // S3 URL
+                  alt="Embedded Image"
+                  className="my-4 rounded-lg shadow-lg"
+                />
+              );
+            }
+
+            // 通常のテキストとして表示
+            return <p key={index}>{line}</p>;
+          })}
         </div>
       </div>
     </div>

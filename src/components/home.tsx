@@ -7,7 +7,7 @@ import Link from "next/link";
 import Header from "./header";
 import Image from "next/image";
 
-// 🔹 `props` の型定義を追加
+// 🔹 `props` の型定義
 interface HomeProps {
   posts: BlogPost[];
   topics: string[];
@@ -16,13 +16,10 @@ interface HomeProps {
 const Home: React.FC<HomeProps> = ({ posts, topics }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1); // 🔹 現在のページ
 
-  //   useEffect(() => {
-  //     if (typeof window !== "undefined") {
-  //       document.body.classList.add("antialiased");
-  //       return () => document.body.classList.remove("antialiased");
-  //     }
-  //   }, []);
+  // const postsPerPage = 9; // 🔹 1ページあたりの投稿数
+  const postsPerPage = 3; // 🔹 1ページあたりの投稿数
 
   // 🔍 フィルタリング処理
   const filteredPosts = posts.filter(
@@ -34,6 +31,22 @@ const Home: React.FC<HomeProps> = ({ posts, topics }) => {
       (!selectedTag || post.topics.includes(selectedTag))
   );
 
+  // 📌 ページネーション処理
+  const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
+  const paginatedPosts = filteredPosts.slice(
+    (currentPage - 1) * postsPerPage,
+    currentPage * postsPerPage
+  );
+
+  // 🔄 ページ変更ハンドラ
+  const handleNextPage = () => {
+    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) setCurrentPage(currentPage - 1);
+  };
+
   return (
     <div className="bg-gray-100 min-h-screen p-6">
       <Header />
@@ -44,7 +57,10 @@ const Home: React.FC<HomeProps> = ({ posts, topics }) => {
           type="text"
           placeholder="Search posts"
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={(e) => {
+            setSearchTerm(e.target.value);
+            setCurrentPage(1); // 🔹 検索時にページをリセット
+          }}
           className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300"
         />
       </div>
@@ -56,7 +72,10 @@ const Home: React.FC<HomeProps> = ({ posts, topics }) => {
           {topics.map((topic) => (
             <button
               key={topic}
-              onClick={() => setSelectedTag(topic)}
+              onClick={() => {
+                setSelectedTag(topic);
+                setCurrentPage(1); // 🔹 フィルター時にページをリセット
+              }}
               className={`px-4 py-2 rounded-full text-sm ${
                 selectedTag === topic
                   ? "bg-blue-500 text-white"
@@ -67,7 +86,10 @@ const Home: React.FC<HomeProps> = ({ posts, topics }) => {
             </button>
           ))}
           <button
-            onClick={() => setSelectedTag(null)}
+            onClick={() => {
+              setSelectedTag(null);
+              setCurrentPage(1); // 🔹 クリア時にページをリセット
+            }}
             className="text-gray-500 text-sm underline"
           >
             Clear All
@@ -77,25 +99,19 @@ const Home: React.FC<HomeProps> = ({ posts, topics }) => {
 
       {/* 📝 Blog Posts */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredPosts.length > 0 ? (
-          filteredPosts.map((post) => (
+        {paginatedPosts.length > 0 ? (
+          paginatedPosts.map((post) => (
             <Link
               key={post.title}
               href={`/${post.slug}/${post.date}`}
               passHref
               className="block bg-white rounded-lg shadow-lg overflow-hidden"
             >
-              {/* <img
-                src={post.image}
-                alt={post.title}
-                className="w-full h-48 object-cover"
-              /> */}
               <Image
                 src={post.image}
                 alt={post.title}
-                width={1280} // 適切なサイズを指定
+                width={1280}
                 height={1280}
-                //   fill
                 className="w-full h-48 object-cover"
               />
               <div className="p-4">
@@ -122,6 +138,29 @@ const Home: React.FC<HomeProps> = ({ posts, topics }) => {
           </p>
         )}
       </div>
+
+      {/* 📍 Pagination Controls */}
+      {totalPages > 1 && (
+        <div className="flex justify-center items-center mt-8 gap-4">
+          <button
+            onClick={handlePrevPage}
+            disabled={currentPage === 1}
+            className="px-4 py-2 bg-gray-500 text-white rounded-lg disabled:opacity-50"
+          >
+            Previous
+          </button>
+          <span className="text-gray-700 font-semibold flex items-center">
+            Page {currentPage} of {totalPages}
+          </span>
+          <button
+            onClick={handleNextPage}
+            disabled={currentPage === totalPages}
+            className="px-4 py-2 bg-gray-500 text-white rounded-lg disabled:opacity-50"
+          >
+            Next
+          </button>
+        </div>
+      )}
     </div>
   );
 };

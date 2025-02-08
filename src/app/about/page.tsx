@@ -33,7 +33,7 @@ export default function AboutPage() {
 
           {/* テキスト部分 */}
           <div className="text-left">
-            <h2 className="text-2xl font-bold mb-2">ジャパ・ザ・ハットリ</h2>
+            <h2 className="text-2xl font-bold mb-2">Kohh</h2>
             <p className="text-gray-700 mb-4">ソフトウェアエンジニア</p>
             <ul className="list-disc list-inside text-gray-700 space-y-2">
               <li>テスト</li>
@@ -53,7 +53,9 @@ export default function AboutPage() {
           </div>
         </div>
       </div>
-      <footer className="mt-12 text-center text-gray-500">2025Kohhblog</footer>
+      <footer className="mt-12 text-center text-gray-500">
+        2025 Kohh blog
+      </footer>
     </div>
   );
 }
