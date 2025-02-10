@@ -4,16 +4,34 @@ import { motion } from "framer-motion";
 
 export default function CursorFollower() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isMobile, setIsMobile] = useState(false);
 
-  // マウスの位置を取得
+  // 画面サイズを監視
   useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768); // 768px以下ならモバイルと判定
+    };
+
+    handleResize(); // 初回チェック
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // マウスの位置を取得（モバイルでは実行しない）
+  useEffect(() => {
+    if (isMobile) return; // モバイル時はイベントを追加しない
+
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
     };
 
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
+  }, [isMobile]);
+
+  // モバイルではカーソルを表示しない
+  if (isMobile) return null;
 
   return (
     <motion.div
