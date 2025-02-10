@@ -12,6 +12,10 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      fontFamily: {
+        cursive: ['"Dancing Script"', "cursive"],
+        roboto: ['"Roboto"', "sans-serif"],
+      },
     },
   },
   plugins: [],

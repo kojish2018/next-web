@@ -1,6 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
 
 :root {
   --background: #ffffff;
@@ -29,7 +31,8 @@ body {
 }
 
 .bg-works {
-  background-image: url("/worksbackground.webp"); /* ✅ 背景画像 */
+  /* background-image: url("/worksbackground.webp"); ✅ 背景画像 */
+  background-image: url("/worksbackground.jpg"); /* ✅ 背景画像 */
   background-size: cover; /* ✅ 画像を画面いっぱいに */
   background-position: center; /* ✅ 中央に配置 */
   background-repeat: no-repeat; /* ✅ 繰り返しなし */
@@ -40,7 +43,7 @@ body {
     255,
     255,
     255,
-    0.9
+    0.5
   ); /* ✅ 白のオーバーレイ (透明度50%) */
   background-blend-mode: overlay; /* ✅ 画像と白色をブレンド */
 }

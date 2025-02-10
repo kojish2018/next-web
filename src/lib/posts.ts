@@ -42,7 +42,7 @@ export async function getAllPosts(): Promise<BlogPost[]> {
             title: data.title,
             date: data.date,
             topics: data.topics || [],
-            image: data.image || "/default.jpg",
+            image: data.image || "/default1.jpg",
             slug: fileName.replace(/\.md$/, ""),
             content,
           } as BlogPost;

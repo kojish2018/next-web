@@ -7,7 +7,8 @@ const Header = () => {
     <header className="flex justify-between items-center mb-8">
       <h1 className="text-3xl font-bold">
         <Link href="/" className="text-gray-600 hover:text-black">
-          Kohh Blog
+          {/* Kohh Blog */}
+          Koji 脱養分ブログ
         </Link>
       </h1>
       <nav className="flex space-x-4">
