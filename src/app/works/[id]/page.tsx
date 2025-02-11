@@ -33,63 +33,63 @@ export default function WorkDetailPage() {
       </div>
 
       {/* ✅ シャドウをつけた紺色の長方形 */}
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div className="w-[90%] max-w-6xl h-auto lg:h-[60vh] bg-blue-950 rounded-xl shadow-2xl"></div>
-      </div>
-
-      {/* ✅ コンテンツ */}
-      <motion.div
-        className="relative flex flex-col lg:flex-row w-full max-w-6xl mx-auto px-8 lg:px-16 py-16 gap-12 z-10"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-      >
+      <div className="relative w-[90%] max-w-6xl h-auto lg:h-[60vh] bg-blue-950 rounded-xl shadow-2xl overflow-hidden flex flex-col lg:flex-row p-8 gap-8">
         {/* 左側のテキスト情報 */}
         <motion.div
-          className="flex-1 text-left text-white" // ✅ 文字を白に
+          className="flex-1 text-left text-white flex flex-col justify-between"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <h1 className="text-4xl font-bold mb-6">{project.name}</h1>
-          <div className="mb-8">
-            <p className="text-lg font-semibold">Category</p>
-            <div className="inline-block px-4 py-2 bg-gray-800 text-white rounded-lg">
-              {project.category}
+          <h1 className="text-4xl font-bold">{project.name}</h1>
+
+          {/* ✅ カテゴリー・ロール・タグを3行にまとめる */}
+          <div className="flex flex-col gap-4">
+            {/* 1行目 - Category */}
+            <div className="flex items-center gap-4">
+              <p className="text-lg font-semibold w-32">Category</p>
+              <span className="px-4 py-2 bg-gray-800 text-white rounded-lg min-w-[120px]">
+                {project.category}
+              </span>
+            </div>
+
+            {/* 2行目 - Role */}
+            <div className="flex items-center gap-4">
+              <p className="text-lg font-semibold w-32">Role</p>
+              <div className="flex gap-2">
+                {project.role.map((role: string, index: number) => (
+                  <span
+                    key={index}
+                    className="px-4 py-2 bg-gray-800 text-white rounded-lg min-w-[120px]"
+                  >
+                    {role}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* 3行目 - Tags */}
+            <div className="flex items-center gap-4">
+              <p className="text-lg font-semibold w-32">Tags</p>
+              <div className="flex gap-2">
+                {project.tag.map((tag: string, index: number) => (
+                  <span
+                    key={index}
+                    className="px-4 py-2 bg-gray-700 text-white rounded-lg min-w-[120px]"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
-          <div className="mb-8">
-            <p className="text-lg font-semibold">Role</p>
-            <div className="flex gap-2 flex-wrap">
-              {project.role.map((role: string, index: number) => (
-                <span
-                  key={index}
-                  className="inline-block px-4 py-2 bg-gray-800 text-white rounded-lg"
-                >
-                  {role}
-                </span>
-              ))}
-            </div>
-          </div>
-          <div className="mb-8">
-            <p className="text-lg font-semibold">Tags</p>
-            <div className="flex gap-2 flex-wrap">
-              {project.tag.map((tag: string, index: number) => (
-                <span
-                  key={index}
-                  className="inline-block px-4 py-2 bg-gray-700 text-white rounded-lg"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          </div>
+
           {/* Visit Site ボタン */}
           <a
-            href={project.url} // ✅ プロジェクトのリンクに飛ぶ
+            href={project.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="px-6 py-3 border border-white text-white rounded-lg hover:bg-white hover:text-black transition inline-block w-full text-center"
+            className="mt-6 px-6 py-3 border border-white text-white rounded-lg hover:bg-white hover:text-black transition inline-block text-center"
           >
             Visit Site
           </a>
@@ -97,12 +97,12 @@ export default function WorkDetailPage() {
 
         {/* 右側のメインビジュアル (横長表示) */}
         <motion.div
-          className="flex-1 relative"
+          className="flex-1 relative flex items-center justify-center"
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <div className="relative w-full h-auto max-h-[400px] lg:max-h-[500px] bg-gray-900 rounded-lg overflow-hidden">
+          <div className="relative w-full max-w-[550px] h-auto bg-gray-900 rounded-lg overflow-hidden">
             {/* ✅ `mov` の場合は `video` を表示、それ以外は `next/image` */}
             {isVideo ? (
               <video
@@ -117,14 +117,14 @@ export default function WorkDetailPage() {
               <Image
                 src={project.image}
                 alt={project.name}
-                width={1200} // 横長
-                height={500} // 高さを制限
+                width={600} // 横長
+                height={350} // 高さを制限
                 className="w-full h-auto object-cover rounded-lg"
               />
             )}
           </div>
         </motion.div>
-      </motion.div>
+      </div>
     </div>
   );
 }
