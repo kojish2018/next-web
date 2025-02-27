@@ -13,8 +13,8 @@ image: "https://qiitaimgkoji.s3.ap-northeast-1.amazonaws.com/IMG_9689.jpg"
 
 以下は、短期間運用した bot の結果です。
 
-https://qiitaimgkoji.s3.ap-northeast-1.amazonaws.com/IMG_9689.jpg
+![代替テキスト](https://qiitaimgkoji.s3.ap-northeast-1.amazonaws.com/IMG_9689.jpg)
 
-https://qiitaimgkoji.s3.ap-northeast-1.amazonaws.com/IMG_9690.jpg
+![代替テキスト](https://qiitaimgkoji.s3.ap-northeast-1.amazonaws.com/IMG_9690.jpg)
 
 ご覧の通り、初めの 5 日で約 18%の利益が出ました...

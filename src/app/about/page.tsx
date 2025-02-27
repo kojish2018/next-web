@@ -4,6 +4,7 @@ import * as React from "react";
 import Header from "../../components/header";
 import Image from "next/image";
 import Link from "next/link";
+import { BLOG_NAME } from "@/config";
 
 export default function AboutPage() {
   return (
@@ -33,28 +34,37 @@ export default function AboutPage() {
 
           {/* テキスト部分 */}
           <div className="text-left">
-            <h2 className="text-2xl font-bold mb-2">Kohh</h2>
+            <h2 className="text-2xl font-bold mb-2">Koji</h2>
             <p className="text-gray-700 mb-4">ソフトウェアエンジニア</p>
             <ul className="list-disc list-inside text-gray-700 space-y-2">
-              <li>テスト</li>
-              <li>テキスト</li>
-              <li>テスト</li>
-              <li>tesきと</li>
-              <li>テスト</li>
+              <li>
+                フロントエンド: TypeScript を駆使し、Vue、React、Nuxt、Next
+                などで開発
+              </li>
+              <li>バックエンド: PHP や Python を使用したシステム開発の経験</li>
+              <li>機械学習を用いたBot開発</li>
+              <li>
+                リーダーシップ:
+                3年以上のリードエンジニア経験でチームマネジメントを実施
+              </li>
+              <li>
+                統計学: 大学院での計量経済学研究により高度な統計知識を保持
+              </li>
+              <li>英語力: TOEFL iBT 100点、海外留学経験2年</li>
             </ul>
-            <p className="mt-4">
+            {/* <p className="mt-4">
               <Link
                 href="/" // 実際のリンクに変更してください
                 className="text-blue-500 hover:underline"
               >
                 テストアカウント
               </Link>
-            </p>
+            </p> */}
           </div>
         </div>
       </div>
       <footer className="mt-12 text-center text-gray-500">
-        2025 Kohh blog
+        2025 {BLOG_NAME}
       </footer>
     </div>
   );

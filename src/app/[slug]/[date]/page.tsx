@@ -30,8 +30,9 @@ export default async function PostPage({
     <div className="bg-gray-100 min-h-screen p-6">
       <Header />
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
+        <h1 className="text-4xl font-bold mb-4 text-black">{post.title}</h1>
         <p className="text-gray-600 mb-6">{post.date}</p>
+        <hr className="border-gray-300 my-6" />
         <div
           className="prose max-w-none text-gray-900"
           dangerouslySetInnerHTML={{ __html: post.content }}

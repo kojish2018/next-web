@@ -1,6 +1,7 @@
 "use client"; //
 import React from "react";
 import Link from "next/link";
+import { BLOG_NAME } from "@/config";
 
 const Header = () => {
   return (
@@ -8,7 +9,8 @@ const Header = () => {
       <h1 className="text-3xl font-bold">
         <Link href="/" className="text-gray-600 hover:text-black">
           {/* Kohh Blog */}
-          Koji 脱養分ブログ
+          {/* Koji 脱養分ブログ */}
+          {BLOG_NAME}
         </Link>
       </h1>
       <nav className="flex space-x-4">
