@@ -1,8 +1,11 @@
+// src/lib/posts.ts
 "use server"; // サーバーコンポーネントとして明示
 
-import fs from "fs/promises"; // `fs/promises` を使うことで非同期処理にする
+import fs from "fs/promises";
 import path from "path";
 import matter from "gray-matter";
+import { remark } from "remark";
+import html from "remark-html";
 import { BlogPost } from "../types/blogPost";
 
 const postsDirectory = path.join(process.cwd(), "src/posts");
@@ -10,7 +13,6 @@ console.log("📂 読み込み開始: posts ディレクトリのパス", postsD
 
 export async function getAllPosts(): Promise<BlogPost[]> {
   try {
-    // `postsDirectory` にアクセスできるか確認
     const fileNames = await fs.readdir(postsDirectory);
     console.log("📄 読み込んだファイル一覧:", fileNames);
 
@@ -28,7 +30,7 @@ export async function getAllPosts(): Promise<BlogPost[]> {
           console.log(
             `📝 コンテンツ解析 (${fileName}):`,
             content.slice(0, 100)
-          ); // 100文字だけ表示
+          );
 
           // 必要なフィールドが存在しない場合はスキップ
           if (!data.title || !data.date) {
@@ -38,13 +40,17 @@ export async function getAllPosts(): Promise<BlogPost[]> {
             return null;
           }
 
+          // Markdown を HTML に変換
+          const processedContent = await remark().use(html).process(content);
+          const contentHtml = processedContent.toString();
+
           return {
             title: data.title,
             date: data.date,
             topics: data.topics || [],
             image: data.image || "/default1.jpg",
             slug: fileName.replace(/\.md$/, ""),
-            content,
+            content: contentHtml, // 変換後のHTMLを格納
           } as BlogPost;
         } catch (err) {
           console.error(`❌ ${fileName} の読み込みエラー:`, err);
@@ -53,7 +59,6 @@ export async function getAllPosts(): Promise<BlogPost[]> {
       })
     );
 
-    // `null` を削除し、型を `BlogPost[]` にキャスト
     const validPosts: BlogPost[] = posts.filter(
       (post): post is BlogPost => post !== null
     );
@@ -69,4 +74,12 @@ export async function getAllPosts(): Promise<BlogPost[]> {
     console.error("❌ posts ディレクトリの読み込みに失敗しました:", err);
     return [];
   }
+}
+
+export async function getPostBySlugAndDate(
+  slug: string,
+  date: string
+): Promise<BlogPost | null> {
+  const posts = await getAllPosts();
+  return posts.find((post) => post.slug === slug && post.date === date) || null;
 }
