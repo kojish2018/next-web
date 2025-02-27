@@ -9,7 +9,8 @@ export default function WorksHeader() {
       <div className="max-w-5xl mx-1 px-6">
         {/* Worksを押すとworksページに飛ぶ */}
         <Link href="/works">
-          <h1 className="text-5xl font-roboto text-left ml-6 text-black font-bold cursor-pointer hover:underline tracking-widest">
+          {/* <h1 className="text-5xl font-roboto text-left ml-6 text-black font-extrabold cursor-pointer hover:underline tracking-widest"> */}
+          <h1 className="text-5xl text-left ml-6 text-black font-extrabold cursor-pointer hover:underline tracking-widest">
             Works
           </h1>
         </Link>

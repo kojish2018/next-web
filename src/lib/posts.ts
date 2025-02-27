@@ -40,6 +40,7 @@ export async function getAllPosts(): Promise<BlogPost[]> {
             content: contentHtml, // 変換後のHTMLを格納
           } as BlogPost;
         } catch (err) {
+          console.log(err);
           return null;
         }
       })
@@ -51,6 +52,7 @@ export async function getAllPosts(): Promise<BlogPost[]> {
 
     return validPosts;
   } catch (err) {
+    console.log(err);
     return [];
   }
 }
