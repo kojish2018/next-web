@@ -1,6 +1,4 @@
 // src/lib/posts.ts
-// "use server"; // サーバーコンポーネントとして明示
-
 import fs from "fs/promises";
 import path from "path";
 import matter from "gray-matter";
